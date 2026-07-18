@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   AnimatePresence,
@@ -16,6 +17,8 @@ import { getActiveSectionId } from "@/lib/scroll";
 import { sectionIdToPath } from "@/lib/routes";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+
+const MotionLink = motion.create(Link);
 
 function NavLink({
   label,
@@ -55,9 +58,10 @@ function NavLink({
   };
 
   return (
-    <motion.a
+    <MotionLink
       ref={ref}
       href={href}
+      scroll={false}
       onClick={(e) => {
         e.preventDefault();
         onNavigate(href);
@@ -122,7 +126,7 @@ function NavLink({
         }}
         aria-hidden
       />
-    </motion.a>
+    </MotionLink>
   );
 }
 
@@ -226,8 +230,9 @@ export function Navbar() {
           />
         </div>
 
-        <a
+        <Link
           href="/"
+          scroll={false}
           onClick={(e) => {
             e.preventDefault();
             goTo("/");
@@ -236,7 +241,7 @@ export function Navbar() {
         >
           {siteConfig.name.split(" ")[0]}
           <span className="text-accent">.</span>
-        </a>
+        </Link>
 
         <ul className="relative z-[1] hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
@@ -291,8 +296,9 @@ export function Navbar() {
             <ul className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
+                    scroll={false}
                     onClick={(e) => {
                       e.preventDefault();
                       setOpen(false);
@@ -304,7 +310,7 @@ export function Navbar() {
                     )}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
