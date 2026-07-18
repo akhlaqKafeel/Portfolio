@@ -17,11 +17,8 @@ export function ReactLogo({ className }: LogoProps) {
 
 export function NextLogo({ className }: LogoProps) {
   return (
-    <svg viewBox="0 0 24 24" className={cn(className)} fill="currentColor" aria-hidden>
-      <path
-        fill="#fff"
-        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.34 0 .67-.02 1-.05V14.9l-3.9-5.6H11v7.55A8 8 0 1 1 12 4a7.96 7.96 0 0 1 6.32 3.12l-1.5 1.3A6 6 0 1 0 12 18v-2.2l5.9 5.1A9.96 9.96 0 0 0 22 12c0-5.52-4.48-10-10-10z"
-      />
+    <svg viewBox="0 0 24 24" className={cn("text-foreground", className)} fill="currentColor" aria-hidden>
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.34 0 .67-.02 1-.05V14.9l-3.9-5.6H11v7.55A8 8 0 1 1 12 4a7.96 7.96 0 0 1 6.32 3.12l-1.5 1.3A6 6 0 1 0 12 18v-2.2l5.9 5.1A9.96 9.96 0 0 0 22 12c0-5.52-4.48-10-10-10z" />
     </svg>
   );
 }

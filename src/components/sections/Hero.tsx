@@ -190,13 +190,13 @@ export function Hero() {
             variants={fadeUp}
             initial={reduce ? false : "hidden"}
             animate="show"
-            className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-[rgba(212,175,55,0.28)] bg-white/[0.03] px-4 py-1.5 backdrop-blur-md"
+            className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-accent/30 bg-soft px-4 py-1.5 backdrop-blur-md"
           >
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D4AF37] opacity-55" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D4AF37]" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-55" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
             </span>
-            <span className="text-[11px] font-medium uppercase tracking-[0.24em] text-white/70">
+            <span className="text-[11px] font-medium uppercase tracking-[0.24em] text-muted">
               Portfolio 2026
             </span>
           </motion.div>
@@ -209,31 +209,23 @@ export function Hero() {
             className="relative"
           >
             <h1 className="font-display text-[clamp(3.25rem,8.5vw,6.5rem)] font-extrabold leading-[0.9] tracking-[-0.04em]">
-              <span className="block text-white">Akhlaq</span>
-              <span
-                className="block bg-clip-text text-transparent"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(180deg, #F5E6B8 0%, #D4AF37 48%, #9A7B24 100%)",
-                }}
-              >
-                Kafel
-              </span>
+              <span className="block text-heading">Akhlaq</span>
+              <span className="text-gradient block">Kafel</span>
             </h1>
 
             <div className="mt-4 sm:absolute sm:top-[52%] sm:right-0 sm:mt-0 sm:translate-y-[-20%] lg:right-2 xl:right-8">
-              <p className="font-script text-[1.75rem] italic leading-none text-white md:text-[2rem]">
+              <p className="font-script text-[1.75rem] italic leading-none text-champagne md:text-[2rem]">
                 Code. Build. Scale.
               </p>
               <svg
-                className="mt-1 h-3.5 w-[11rem] md:w-[13rem]"
+                className="mt-1 h-3.5 w-[11rem] text-accent md:w-[13rem]"
                 viewBox="0 0 180 14"
                 fill="none"
                 aria-hidden
               >
                 <path
                   d="M2 9c32-7 62-9 92-5 28 4 54 7 84 1"
-                  stroke={GOLD}
+                  stroke="currentColor"
                   strokeWidth="2.2"
                   strokeLinecap="round"
                 />
@@ -246,7 +238,7 @@ export function Hero() {
             variants={fadeUp}
             initial={reduce ? false : "hidden"}
             animate="show"
-            className="mt-8 text-xl font-bold text-white sm:mt-10 sm:text-[1.35rem]"
+            className="mt-8 text-xl font-bold text-heading sm:mt-10 sm:text-[1.35rem]"
           >
             Full-Stack Software Developer
           </motion.p>
@@ -256,7 +248,7 @@ export function Hero() {
             variants={fadeUp}
             initial={reduce ? false : "hidden"}
             animate="show"
-            className="mt-4 max-w-[500px] text-base leading-relaxed text-white/55 sm:text-lg"
+            className="mt-4 max-w-[500px] text-base leading-relaxed text-muted sm:text-lg"
           >
             {heroDescription}
           </motion.p>
@@ -293,7 +285,7 @@ export function Hero() {
                 download="Akhlaq_Kafel_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/18 bg-white/[0.03] text-white backdrop-blur-md hover:border-[rgba(212,175,55,0.5)] hover:bg-[rgba(212,175,55,0.08)] hover:shadow-[0_0_24px_-8px_rgba(212,175,55,0.35)]"
+                className="border border-border-subtle bg-elevated text-foreground backdrop-blur-md hover:border-accent/50 hover:bg-accent/10 hover:shadow-[0_0_24px_-8px_rgba(212,175,55,0.35)]"
               >
                 <Download size={16} />
                 Download Resume
@@ -307,7 +299,7 @@ export function Hero() {
               <MagneticButton
                 as="a"
                 href="#contact"
-                className="border border-white/18 bg-transparent text-white/90 hover:border-[rgba(212,175,55,0.5)] hover:text-white hover:shadow-[0_0_24px_-8px_rgba(212,175,55,0.3)]"
+                className="border border-border-subtle bg-transparent text-foreground hover:border-accent/50 hover:text-heading hover:shadow-[0_0_24px_-8px_rgba(212,175,55,0.3)]"
               >
                 <Mail size={16} />
                 Contact Me
@@ -323,20 +315,17 @@ export function Hero() {
             animate="show"
             className="mt-12"
           >
-            <p
-              className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em]"
-              style={{ color: GOLD }}
-            >
+            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-accent">
               Tech Stack
             </p>
-            <div className="inline-flex max-w-full items-stretch gap-2 overflow-x-auto rounded-[1.25rem] border border-[rgba(212,175,55,0.18)] bg-white/[0.03] p-3 backdrop-blur-xl sm:gap-2.5 sm:p-3.5">
+            <div className="inline-flex max-w-full items-stretch gap-2 overflow-x-auto rounded-[1.25rem] border border-border bg-soft p-3 backdrop-blur-xl sm:gap-2.5 sm:p-3.5">
               {techIcons.map(({ name, icon: Icon }) => (
                 <div
                   key={name}
-                  className="flex min-w-[4.5rem] flex-col items-center gap-2 rounded-xl border border-white/[0.08] bg-black/40 px-3 py-3 sm:min-w-[5rem]"
+                  className="flex min-w-[4.5rem] flex-col items-center gap-2 rounded-xl border border-border-subtle bg-elevated px-3 py-3 sm:min-w-[5rem]"
                 >
                   <Icon className="h-7 w-7 sm:h-8 sm:w-8" />
-                  <span className="text-[10px] font-medium text-white/60 sm:text-[11px]">
+                  <span className="text-[10px] font-medium text-muted sm:text-[11px]">
                     {name}
                   </span>
                 </div>
