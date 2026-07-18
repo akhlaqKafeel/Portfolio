@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#0a0a0a"/>
+  <rect x="40" y="40" width="720" height="420" rx="16" fill="#101010" stroke="rgba(255,255,255,0.08)"/>
+  <circle cx="600" cy="160" r="100" fill="#60A5FA" fill-opacity="0.12"/>
+  <rect x="80" y="100" width="160" height="280" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)"/>
+  <rect x="100" y="130" width="120" height="8" rx="4" fill="rgba(255,255,255,0.1)"/>
+  <rect x="100" y="160" width="120" height="40" rx="8" fill="#1a1a1a"/>
+  <rect x="100" y="220" width="120" height="40" rx="8" fill="#1a1a1a"/>
+  <rect x="100" y="280" width="120" height="40" rx="8" fill="#1a1a1a"/>
+  <rect x="280" y="100" width="400" height="120" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)"/>
+  <rect x="280" y="240" width="190" height="140" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)"/>
+  <rect x="490" y="240" width="190" height="140" rx="12" fill="#141414" stroke="rgba(255,255,255,0.06)"/>
+  <text x="300" y="155" fill="rgba(255,255,255,0.5)" font-family="system-ui,sans-serif" font-size="13">OPERATIONS DASHBOARD</text>
+  <text x="80" y="420" fill="#60A5FA" font-family="system-ui,sans-serif" font-size="14" font-weight="600" letter-spacing="2">HAMARI DAIRY</text>
+</svg>
