@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   AnimatePresence,
   motion,
@@ -15,6 +15,7 @@ import { navLinks, siteConfig } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 import { getActiveSectionId } from "@/lib/scroll";
 import { sectionIdToPath } from "@/lib/routes";
+import { useSectionNav } from "@/lib/navigation";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
@@ -46,29 +47,26 @@ function NavLink({
     y.set(Math.max(-2.5, Math.min(2.5, dy)) - 2.5);
   };
 
-  const onEnter = () => {
-    setHovered(true);
-    y.set(-2.5);
-  };
-
-  const onLeave = () => {
-    setHovered(false);
-    x.set(0);
-    y.set(0);
-  };
-
   return (
     <MotionLink
       ref={ref}
       href={href}
       scroll={false}
+      prefetch={false}
       onClick={(e) => {
         e.preventDefault();
         onNavigate(href);
       }}
       onMouseMove={onMove}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
+      onMouseEnter={() => {
+        setHovered(true);
+        y.set(-2.5);
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+        x.set(0);
+        y.set(0);
+      }}
       style={{ x, y }}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
@@ -131,8 +129,8 @@ function NavLink({
 }
 
 export function Navbar() {
-  const router = useRouter();
   const pathname = usePathname();
+  const goToSection = useSectionNav();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(pathname);
@@ -145,16 +143,11 @@ export function Navbar() {
 
   const goTo = useCallback(
     (href: string) => {
-      router.push(href, { scroll: false });
+      goToSection(href);
       setActive(href);
     },
-    [router]
+    [goToSection]
   );
-
-  const syncActive = useCallback(() => {
-    const id = getActiveSectionId();
-    setActive(sectionIdToPath(id));
-  }, []);
 
   useEffect(() => {
     setActive(pathname);
@@ -163,12 +156,13 @@ export function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 24);
-      syncActive();
+      // Highlight nav from scroll position only — does NOT change the URL
+      setActive(sectionIdToPath(getActiveSectionId()));
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [syncActive]);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -189,17 +183,15 @@ export function Navbar() {
     }
   };
 
-  const onNavLeave = () => {
-    setGlowVisible(false);
-    glowOpacity.set(0);
-  };
-
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6">
       <nav
         ref={navRef}
         onMouseMove={onNavMove}
-        onMouseLeave={onNavLeave}
+        onMouseLeave={() => {
+          setGlowVisible(false);
+          glowOpacity.set(0);
+        }}
         className={cn(
           "relative mx-auto flex h-14 max-w-[1440px] items-center justify-between overflow-hidden rounded-2xl px-5 transition-all duration-500 md:h-16",
           scrolled || open
@@ -233,6 +225,7 @@ export function Navbar() {
         <Link
           href="/"
           scroll={false}
+          prefetch={false}
           onClick={(e) => {
             e.preventDefault();
             goTo("/");
@@ -299,6 +292,7 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     scroll={false}
+                    prefetch={false}
                     onClick={(e) => {
                       e.preventDefault();
                       setOpen(false);

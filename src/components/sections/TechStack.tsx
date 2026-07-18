@@ -7,7 +7,7 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { techCategories, techStack } from "@/data/portfolio";
+import { techStack } from "@/data/portfolio";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { SectionSpotlight } from "@/components/effects/SceneAtmosphere";
@@ -191,23 +191,6 @@ export function TechStack() {
           align="center"
           className="mx-auto"
         />
-
-        {/* Compact category labels */}
-        <Stagger
-          className="mx-auto mb-8 flex max-w-4xl flex-wrap items-center justify-center gap-2 md:mb-10 md:gap-3"
-          stagger={0.05}
-        >
-          {techCategories.map((cat) => (
-            <StaggerItem key={cat.label}>
-              <div className="rounded-full border border-accent/15 bg-elevated/70 px-3.5 py-2 backdrop-blur-md">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">
-                  {cat.label}
-                </p>
-                <p className="mt-0.5 text-xs text-muted">{cat.items}</p>
-              </div>
-            </StaggerItem>
-          ))}
-        </Stagger>
 
         {/* Full-width balanced grid */}
         <Stagger

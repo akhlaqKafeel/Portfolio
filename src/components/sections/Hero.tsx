@@ -18,8 +18,8 @@ import {
   Trophy,
 } from "lucide-react";
 import { useRef } from "react";
-import { useRouter } from "next/navigation";
 import { siteConfig } from "@/data/portfolio";
+import { useSectionNav } from "@/lib/navigation";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import {
   JsLogo,
@@ -75,7 +75,7 @@ const fadeUp: Variants = {
 };
 
 export function Hero() {
-  const router = useRouter();
+  const goToSection = useSectionNav();
   const reduce = useReducedMotion();
   const frameRef = useRef<HTMLDivElement>(null);
 
@@ -272,7 +272,7 @@ export function Hero() {
                 href="/projects"
                 onClick={(e) => {
                   e.preventDefault();
-                  router.push("/projects", { scroll: false });
+                  goToSection("/projects");
                 }}
                 className="btn-gold font-semibold"
               >
@@ -307,7 +307,7 @@ export function Hero() {
                 href="/contact"
                 onClick={(e) => {
                   e.preventDefault();
-                  router.push("/contact", { scroll: false });
+                  goToSection("/contact");
                 }}
                 className="border border-border-subtle bg-transparent text-foreground hover:border-accent/50 hover:text-heading hover:shadow-[0_0_24px_-8px_rgba(212,175,55,0.3)]"
               >
@@ -386,7 +386,7 @@ export function Hero() {
                 <div className="relative overflow-hidden rounded-[29px] border border-[rgba(212,175,55,0.22)] bg-[#0a0a0a]/0.65] p-1.5 backdrop-blur-sm sm:p-2">
                   <div className="relative aspect-[6/7] overflow-hidden rounded-[24px]">
                     <Image
-                      src="/portrait.png"
+                      src="/hero-portrait.png"
                       alt={`${siteConfig.name} — professional portrait`}
                       fill
                       priority

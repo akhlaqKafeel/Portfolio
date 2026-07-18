@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, GraduationCap, MapPin } from "lucide-react";
 import {
@@ -11,6 +10,7 @@ import {
   siteConfig,
   stats,
 } from "@/data/portfolio";
+import { useSectionNav } from "@/lib/navigation";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { SectionSpotlight } from "@/components/effects/SceneAtmosphere";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -40,7 +40,7 @@ const journey = [
 ] as const;
 
 export function About() {
-  const router = useRouter();
+  const goToSection = useSectionNav();
   const reduce = useReducedMotion();
 
   return (
@@ -110,7 +110,7 @@ export function About() {
                 href="/contact"
                 onClick={(e) => {
                   e.preventDefault();
-                  router.push("/contact", { scroll: false });
+                  goToSection("/contact");
                 }}
                 className="border border-border-subtle bg-transparent px-5 py-2.5 text-sm text-foreground hover:border-accent/50 hover:text-heading"
               >
@@ -126,7 +126,7 @@ export function About() {
               <div className="relative mb-8 overflow-hidden rounded-[28px] border border-border">
                 <div className="relative aspect-[16/11] sm:aspect-[5/3] lg:aspect-[4/3]">
                   <Image
-                    src="/portrait.png"
+                    src="/about-portrait.png"
                     alt={`${siteConfig.name} — portrait`}
                     fill
                     sizes="(max-width: 1024px) 90vw, 480px"

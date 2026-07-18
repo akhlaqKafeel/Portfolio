@@ -19,13 +19,10 @@ const idByPath = Object.fromEntries(
 ) as Record<string, SectionId>;
 
 export function pathToSectionId(pathname: string): SectionId {
-  return idByPath[pathname] ?? "home";
+  const clean = pathname.split("?")[0].split("#")[0];
+  return idByPath[clean] ?? "home";
 }
 
 export function sectionIdToPath(id: string): SectionPath {
   return pathById[id as SectionId] ?? "/";
-}
-
-export function isSectionPath(pathname: string): boolean {
-  return pathname in idByPath;
 }
