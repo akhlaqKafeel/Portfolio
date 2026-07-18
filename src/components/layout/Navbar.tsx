@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import {
   AnimatePresence,
   motion,
@@ -11,43 +12,21 @@ import {
 import { Menu, X } from "lucide-react";
 import { navLinks, siteConfig } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
+import { getActiveSectionId } from "@/lib/scroll";
+import { sectionIdToPath } from "@/lib/routes";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-
-type PortfolioLenis = {
-  scrollTo: (target: string | HTMLElement, opts?: object) => void;
-};
-
-function getLenis(): PortfolioLenis | undefined {
-  return (window as unknown as { __portfolioLenis?: PortfolioLenis })
-    .__portfolioLenis;
-}
-
-function scrollToSection(href: string) {
-  const id = href.replace("#", "");
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  const offset = -88;
-  const lenis = getLenis();
-  if (lenis) {
-    lenis.scrollTo(el, { offset, duration: 1.15 });
-  } else {
-    const top = el.getBoundingClientRect().top + window.scrollY + offset;
-    window.scrollTo({ top, behavior: "smooth" });
-  }
-
-  history.replaceState(null, "", href);
-}
 
 function NavLink({
   label,
   href,
   active,
+  onNavigate,
 }: {
   label: string;
   href: string;
   active: boolean;
+  onNavigate: (href: string) => void;
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const [hovered, setHovered] = useState(false);
@@ -81,7 +60,7 @@ function NavLink({
       href={href}
       onClick={(e) => {
         e.preventDefault();
-        scrollToSection(href);
+        onNavigate(href);
       }}
       onMouseMove={onMove}
       onMouseEnter={onEnter}
@@ -98,7 +77,6 @@ function NavLink({
       )}
       aria-current={active ? "page" : undefined}
     >
-      {/* Soft hover glass */}
       <span
         className={cn(
           "pointer-events-none absolute inset-0 rounded-full border backdrop-blur-md transition-all duration-[350ms] ease-in-out",
@@ -109,7 +87,6 @@ function NavLink({
         aria-hidden
       />
 
-      {/* Floating active pill */}
       {active && (
         <motion.span
           layoutId="nav-active-pill"
@@ -119,7 +96,6 @@ function NavLink({
         />
       )}
 
-      {/* Soft golden glow behind text */}
       <span
         className={cn(
           "pointer-events-none absolute inset-0 rounded-full transition-opacity duration-[350ms] ease-in-out",
@@ -134,7 +110,6 @@ function NavLink({
 
       <span className="relative z-[1]">{label}</span>
 
-      {/* Center-outward gold underline */}
       <span
         className="pointer-events-none absolute bottom-1 left-1/2 z-[1] h-[2px] -translate-x-1/2 rounded-full bg-accent transition-[width,box-shadow,opacity] duration-[350ms] ease-in-out"
         style={{
@@ -152,9 +127,11 @@ function NavLink({
 }
 
 export function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string>("");
+  const [active, setActive] = useState(pathname);
   const [glowVisible, setGlowVisible] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const mouseX = useMotionValue(0);
@@ -162,17 +139,22 @@ export function Navbar() {
   const glowOpacity = useSpring(0, { stiffness: 200, damping: 28 });
   const navGlow = useMotionTemplate`radial-gradient(420px circle at ${mouseX}px ${mouseY}px, var(--glow), transparent 42%)`;
 
+  const goTo = useCallback(
+    (href: string) => {
+      router.push(href, { scroll: false });
+      setActive(href);
+    },
+    [router]
+  );
+
   const syncActive = useCallback(() => {
-    const offset = 120;
-    let current = "";
-    for (const link of navLinks) {
-      const el = document.getElementById(link.href.slice(1));
-      if (!el) continue;
-      const top = el.getBoundingClientRect().top;
-      if (top - offset <= 0) current = link.href;
-    }
-    setActive(current);
+    const id = getActiveSectionId();
+    setActive(sectionIdToPath(id));
   }, []);
+
+  useEffect(() => {
+    setActive(pathname);
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -221,14 +203,12 @@ export function Navbar() {
             : "border border-transparent bg-transparent"
         )}
       >
-        {/* Cursor-follow radial gold light */}
         <motion.div
           className="pointer-events-none absolute inset-0 rounded-2xl"
           style={{ background: navGlow, opacity: glowOpacity }}
           aria-hidden
         />
 
-        {/* Subtle shimmering bottom accent */}
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 h-px overflow-hidden"
           aria-hidden
@@ -247,11 +227,10 @@ export function Navbar() {
         </div>
 
         <a
-          href="#home"
+          href="/"
           onClick={(e) => {
             e.preventDefault();
-            scrollToSection("#home");
-            setActive("");
+            goTo("/");
           }}
           className="relative z-[1] font-display text-lg font-bold tracking-tight text-foreground"
         >
@@ -266,6 +245,7 @@ export function Navbar() {
                 label={link.label}
                 href={link.href}
                 active={active === link.href}
+                onNavigate={goTo}
               />
             </li>
           ))}
@@ -275,11 +255,10 @@ export function Navbar() {
           <ThemeToggle />
           <MagneticButton
             as="a"
-            href="#contact"
+            href="/contact"
             onClick={(e) => {
               e.preventDefault();
-              scrollToSection("#contact");
-              setActive("#contact");
+              goTo("/contact");
             }}
             className="border border-accent/30 bg-accent/10 px-5 py-2.5 text-champagne hover:bg-accent/15"
           >
@@ -317,8 +296,7 @@ export function Navbar() {
                     onClick={(e) => {
                       e.preventDefault();
                       setOpen(false);
-                      scrollToSection(link.href);
-                      setActive(link.href);
+                      goTo(link.href);
                     }}
                     className={cn(
                       "font-display text-2xl font-semibold transition-colors duration-300",

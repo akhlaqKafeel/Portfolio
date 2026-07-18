@@ -9,6 +9,7 @@ import { Skills } from "@/components/sections/Skills";
 import { WhyMe } from "@/components/sections/WhyMe";
 import { Contact } from "@/components/sections/Contact";
 import { SceneAtmosphere } from "@/components/effects/SceneAtmosphere";
+import { SectionRouter } from "@/components/providers/SectionRouter";
 import { siteConfig } from "@/data/portfolio";
 
 const jsonLd = {
@@ -27,7 +28,11 @@ const jsonLd = {
   sameAs: [siteConfig.github, siteConfig.linkedin],
 };
 
-export default function Home() {
+export default function PortfolioLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <script
@@ -47,6 +52,8 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <SectionRouter />
+      {children}
     </>
   );
 }
