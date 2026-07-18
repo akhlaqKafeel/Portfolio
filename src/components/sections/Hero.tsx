@@ -6,385 +6,596 @@ import {
   useMotionValue,
   useReducedMotion,
   useSpring,
+  useTransform,
+  type Variants,
 } from "framer-motion";
-import { ArrowUpRight, Download, Mail } from "lucide-react";
+import {
+  ArrowUpRight,
+  Code2,
+  Download,
+  Mail,
+  Rocket,
+  Trophy,
+} from "lucide-react";
 import { useRef } from "react";
 import { siteConfig } from "@/data/portfolio";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { AmbientLight } from "@/components/effects/AmbientLight";
+import {
+  JsLogo,
+  MongoLogo,
+  NextLogo,
+  NodeLogo,
+  ReactLogo,
+} from "@/components/ui/TechLogos";
+
+const GOLD = "#D4AF37";
 
 const heroDescription =
   "I build scalable production-grade web applications with React, Next.js, Node.js and MongoDB.";
 
 const techIcons = [
-  { name: "React", icon: ReactIcon },
-  { name: "Next.js", icon: NextIcon },
-  { name: "Node.js", icon: NodeIcon },
-  { name: "MongoDB", icon: MongoIcon },
-  { name: "JavaScript", icon: JsIcon },
+  { name: "React", icon: ReactLogo },
+  { name: "Next.js", icon: NextLogo },
+  { name: "Node.js", icon: NodeLogo },
+  { name: "MongoDB", icon: MongoLogo },
+  { name: "JavaScript", icon: JsLogo },
 ] as const;
+
+const stats = [
+  { icon: Rocket, value: "2+", label: "Years Experience" },
+  { icon: Code2, value: "15+", label: "Projects Delivered" },
+  { icon: Trophy, value: "100%", label: "Client Satisfaction" },
+] as const;
+
+const stars = [
+  { top: "12%", left: "8%", size: 1.5, delay: 0 },
+  { top: "22%", left: "38%", size: 1, delay: 1.2 },
+  { top: "18%", left: "72%", size: 1.5, delay: 0.4 },
+  { top: "48%", left: "6%", size: 1, delay: 2.1 },
+  { top: "58%", left: "28%", size: 1.5, delay: 0.8 },
+  { top: "70%", left: "55%", size: 1, delay: 1.6 },
+  { top: "35%", left: "92%", size: 1.5, delay: 0.2 },
+  { top: "78%", left: "88%", size: 1, delay: 2.4 },
+  { top: "85%", left: "18%", size: 1.5, delay: 1.1 },
+  { top: "42%", left: "48%", size: 1, delay: 1.9 },
+] as const;
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.75,
+      delay: 0.08 + i * 0.08,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
 
 export function Hero() {
   const reduce = useReducedMotion();
   const frameRef = useRef<HTMLDivElement>(null);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
+
   const rotX = useMotionValue(0);
   const rotY = useMotionValue(0);
-  const springX = useSpring(mx, { stiffness: 50, damping: 18 });
-  const springY = useSpring(my, { stiffness: 50, damping: 18 });
-  const rx = useSpring(rotX, { stiffness: 80, damping: 18 });
-  const ry = useSpring(rotY, { stiffness: 80, damping: 18 });
+  const rx = useSpring(rotX, { stiffness: 120, damping: 20 });
+  const ry = useSpring(rotY, { stiffness: 120, damping: 20 });
+
+  const parallaxX = useMotionValue(0);
+  const parallaxY = useMotionValue(0);
+  const px = useSpring(parallaxX, { stiffness: 40, damping: 18 });
+  const py = useSpring(parallaxY, { stiffness: 40, damping: 18 });
+  const pxNeg = useTransform(px, (v) => -v);
+  const pySoft = useTransform(py, (v) => v * 0.55);
+  const pyNeg = useTransform(py, (v) => -v * 0.55);
 
   const onMove = (e: React.MouseEvent) => {
     if (reduce) return;
     const el = frameRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    mx.set(px * 14);
-    my.set(py * 10);
-    rotX.set(py * -8);
-    rotY.set(px * 10);
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    rotX.set(ny * -2);
+    rotY.set(nx * 2);
+    parallaxX.set(nx * 12);
+    parallaxY.set(ny * 10);
   };
 
   const onLeave = () => {
-    mx.set(0);
-    my.set(0);
     rotX.set(0);
     rotY.set(0);
+    parallaxX.set(0);
+    parallaxY.set(0);
   };
 
   return (
     <section
       id="home"
-      className="relative flex min-h-[92svh] items-center overflow-hidden pt-24 pb-10 md:pb-14"
+      className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 pb-12 lg:pb-16"
     >
-      {/* Cinematic atmosphere */}
+      {/* Atmosphere — left gold glow ~10% */}
       <div
         className="pointer-events-none absolute inset-0 -z-20"
         aria-hidden
         style={{
           background: `
-            radial-gradient(ellipse 50% 60% at 75% 45%, rgba(201,162,39,0.14), transparent 55%),
-            radial-gradient(ellipse 40% 35% at 20% 20%, rgba(255,248,230,0.03), transparent 50%),
-            radial-gradient(circle at 50% 120%, rgba(140,115,74,0.12), transparent 45%)
+            radial-gradient(ellipse 55% 50% at 22% 42%, rgba(212,175,55,0.10), transparent 60%),
+            radial-gradient(ellipse 40% 45% at 78% 50%, rgba(212,175,55,0.06), transparent 55%),
+            radial-gradient(circle at 50% 110%, rgba(212,175,55,0.05), transparent 40%)
           `,
         }}
       />
-      <AmbientLight />
 
-      {/* Grid + light rays */}
-      <div className="grid-overlay pointer-events-none absolute inset-0 -z-10 opacity-50" />
-      {!reduce && (
-        <>
-          <motion.div
-            className="pointer-events-none absolute -top-20 left-[15%] h-[60vh] w-px origin-top bg-gradient-to-b from-accent/40 via-accent/10 to-transparent"
-            animate={{ opacity: [0.2, 0.55, 0.2], scaleY: [0.85, 1, 0.85] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            aria-hidden
-          />
-          <motion.div
-            className="pointer-events-none absolute top-0 right-[28%] h-[50vh] w-px origin-top bg-gradient-to-b from-white/20 via-accent/10 to-transparent"
-            animate={{ opacity: [0.1, 0.4, 0.1] }}
+      {/* Faint grid */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.35]"
+        aria-hidden
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(212,175,55,0.045) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(212,175,55,0.045) 1px, transparent 1px)
+          `,
+          backgroundSize: "64px 64px",
+          maskImage:
+            "radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 75%)",
+        }}
+      />
+
+      {/* Tiny stars */}
+      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
+        {stars.map((s, i) => (
+          <motion.span
+            key={i}
+            className="absolute rounded-full bg-[#D4AF37]"
+            style={{
+              top: s.top,
+              left: s.left,
+              width: s.size,
+              height: s.size,
+              boxShadow: `0 0 ${s.size * 3}px ${GOLD}`,
+            }}
+            animate={
+              reduce
+                ? undefined
+                : { opacity: [0.15, 0.85, 0.15], scale: [1, 1.4, 1] }
+            }
             transition={{
-              duration: 10,
-              delay: 1.5,
+              duration: 3.5 + (i % 3),
+              delay: s.delay,
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            aria-hidden
           />
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="pointer-events-none absolute rounded-full border border-accent/15"
-              style={{
-                width: 180 + i * 140,
-                height: 180 + i * 140,
-                right: `${8 + i * 4}%`,
-                top: `${18 + i * 6}%`,
-              }}
-              animate={{ rotate: 360 }}
-              transition={{
-                duration: 40 + i * 20,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              aria-hidden
-            />
-          ))}
-        </>
+        ))}
+      </div>
+
+      {/* Soft pulse glow behind left copy */}
+      {!reduce && (
+        <motion.div
+          className="pointer-events-none absolute left-[8%] top-[28%] -z-10 h-[42vmin] w-[42vmin] rounded-full blur-3xl"
+          style={{ background: "rgba(212,175,55,0.10)" }}
+          animate={{ opacity: [0.55, 1, 0.55], scale: [0.92, 1.05, 0.92] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          aria-hidden
+        />
       )}
 
-      <div className="relative z-10 mx-auto grid w-full max-w-[1440px] items-center gap-10 px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:px-10">
-        {/* Left — cinematic copy */}
-        <div className="relative max-w-xl xl:max-w-2xl">
+      <div className="relative z-10 mx-auto grid w-full max-w-[1440px] items-center gap-12 px-6 lg:grid-cols-[0.45fr_0.55fr] lg:gap-10 lg:px-10 xl:gap-14">
+        {/* ── LEFT 45% ── */}
+        <div className="relative max-w-[540px] lg:max-w-none">
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 backdrop-blur-md"
+            custom={0}
+            variants={fadeUp}
+            initial={reduce ? false : "hidden"}
+            animate="show"
+            className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-[rgba(212,175,55,0.28)] bg-white/[0.03] px-4 py-1.5 backdrop-blur-md"
           >
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D4AF37] opacity-55" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D4AF37]" />
             </span>
-            <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted">
-              Portfolio {new Date().getFullYear()}
+            <span className="text-[11px] font-medium uppercase tracking-[0.24em] text-white/70">
+              Portfolio 2026
             </span>
           </motion.div>
 
-          <motion.h1
-            initial={reduce ? false : { opacity: 0, y: 32, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.9, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-[clamp(3rem,9vw,6rem)] font-bold leading-[0.92] tracking-tight"
+          <motion.div
+            custom={1}
+            variants={fadeUp}
+            initial={reduce ? false : "hidden"}
+            animate="show"
+            className="relative"
           >
-            <span className="text-white">{siteConfig.name.split(" ")[0]}</span>
-            <br />
-            <span className="text-gradient">{siteConfig.name.split(" ").slice(1).join(" ")}</span>
-          </motion.h1>
+            <h1 className="font-display text-[clamp(3.25rem,8.5vw,6.5rem)] font-extrabold leading-[0.9] tracking-[-0.04em]">
+              <span className="block text-white">Akhlaq</span>
+              <span
+                className="block bg-clip-text text-transparent"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(180deg, #F5E6B8 0%, #D4AF37 48%, #9A7B24 100%)",
+                }}
+              >
+                Kafel
+              </span>
+            </h1>
+
+            <div className="mt-4 sm:absolute sm:top-[52%] sm:right-0 sm:mt-0 sm:translate-y-[-20%] lg:right-2 xl:right-8">
+              <p className="font-script text-[1.75rem] italic leading-none text-white md:text-[2rem]">
+                Code. Build. Scale.
+              </p>
+              <svg
+                className="mt-1 h-3.5 w-[11rem] md:w-[13rem]"
+                viewBox="0 0 180 14"
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M2 9c32-7 62-9 92-5 28 4 54 7 84 1"
+                  stroke={GOLD}
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+          </motion.div>
 
           <motion.p
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.22 }}
-            className="mt-6 text-xl font-medium text-white/90"
+            custom={2}
+            variants={fadeUp}
+            initial={reduce ? false : "hidden"}
+            animate="show"
+            className="mt-8 text-xl font-bold text-white sm:mt-10 sm:text-[1.35rem]"
           >
-            {siteConfig.title}
+            Full-Stack Software Developer
           </motion.p>
 
           <motion.p
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.32 }}
-            className="mt-5 max-w-md text-base leading-relaxed text-muted sm:text-lg"
+            custom={3}
+            variants={fadeUp}
+            initial={reduce ? false : "hidden"}
+            animate="show"
+            className="mt-4 max-w-[500px] text-base leading-relaxed text-white/55 sm:text-lg"
           >
             {heroDescription}
           </motion.p>
 
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.42 }}
-            className="mt-10 flex flex-wrap gap-3"
+            custom={4}
+            variants={fadeUp}
+            initial={reduce ? false : "hidden"}
+            animate="show"
+            className="mt-10 flex flex-wrap gap-3.5"
           >
-            <MagneticButton
-              as="a"
-              href="#projects"
-              className="btn-gradient"
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.48, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             >
-              View Projects
-              <ArrowUpRight size={16} />
-            </MagneticButton>
-            <MagneticButton
-              as="a"
-              href={siteConfig.resumeUrl}
-              download="Akhlaq_Kafel_Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border border-accent/40 bg-[#0A0A0A] text-[#E8D5A3] backdrop-blur-md hover:border-accent/70 hover:bg-accent/10"
+              <MagneticButton
+                as="a"
+                href="#projects"
+                className="btn-gold font-semibold"
+              >
+                View Projects
+                <ArrowUpRight size={16} strokeWidth={2.25} />
+              </MagneticButton>
+            </motion.div>
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.58, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Download size={16} />
-              Download Resume
-            </MagneticButton>
-            <MagneticButton
-              as="a"
-              href="#contact"
-              className="border border-accent/25 bg-transparent text-[#E8D5A3]/90 hover:border-accent/50 hover:text-[#FFF8E7]"
+              <MagneticButton
+                as="a"
+                href={siteConfig.resumeUrl}
+                download="Akhlaq_Kafel_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-white/18 bg-white/[0.03] text-white backdrop-blur-md hover:border-[rgba(212,175,55,0.5)] hover:bg-[rgba(212,175,55,0.08)] hover:shadow-[0_0_24px_-8px_rgba(212,175,55,0.35)]"
+              >
+                <Download size={16} />
+                Download Resume
+              </MagneticButton>
+            </motion.div>
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.68, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Mail size={16} />
-              Contact Me
-            </MagneticButton>
+              <MagneticButton
+                as="a"
+                href="#contact"
+                className="border border-white/18 bg-transparent text-white/90 hover:border-[rgba(212,175,55,0.5)] hover:text-white hover:shadow-[0_0_24px_-8px_rgba(212,175,55,0.3)]"
+              >
+                <Mail size={16} />
+                Contact Me
+              </MagneticButton>
+            </motion.div>
           </motion.div>
 
+          {/* Tech stack glass card */}
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55 }}
-            className="mt-14"
+            custom={5}
+            variants={fadeUp}
+            initial={reduce ? false : "hidden"}
+            animate="show"
+            className="mt-12"
           >
-            <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.24em] text-muted">
+            <p
+              className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em]"
+              style={{ color: GOLD }}
+            >
               Tech Stack
             </p>
-            <ul className="flex flex-wrap items-center gap-5">
+            <div className="inline-flex max-w-full items-stretch gap-2 overflow-x-auto rounded-[1.25rem] border border-[rgba(212,175,55,0.18)] bg-white/[0.03] p-3 backdrop-blur-xl sm:gap-2.5 sm:p-3.5">
               {techIcons.map(({ name, icon: Icon }) => (
-                <li
+                <div
                   key={name}
-                  className="flex items-center gap-2 text-white/40 transition-colors hover:text-white/80"
-                  title={name}
+                  className="flex min-w-[4.5rem] flex-col items-center gap-2 rounded-xl border border-white/[0.08] bg-black/40 px-3 py-3 sm:min-w-[5rem]"
                 >
-                  <Icon className="h-5 w-5" />
-                  <span className="hidden text-xs font-medium sm:inline">
+                  <Icon className="h-7 w-7 sm:h-8 sm:w-8" />
+                  <span className="text-[10px] font-medium text-white/60 sm:text-[11px]">
                     {name}
                   </span>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </motion.div>
         </div>
 
-        {/* Right — luxury portrait showcase */}
+        {/* ── RIGHT 55% ── */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(12px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto w-full max-w-lg lg:max-w-none"
+          initial={reduce ? false : { opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 1.05,
+            delay: 0.18,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="relative mx-auto w-full max-w-[520px] lg:max-w-none lg:pl-4"
         >
-          {/* Spotlight */}
-          <div
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 animate-pulse-glow rounded-full blur-3xl"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(201,162,39,0.16), transparent 65%)",
-            }}
-            aria-hidden
-          />
+          {/* Portrait glow pulse */}
+          {!reduce && (
+            <motion.div
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+              style={{ background: "rgba(212,175,55,0.12)" }}
+              animate={{ opacity: [0.45, 0.85, 0.45] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden
+            />
+          )}
 
-          <motion.div
+          <div
             ref={frameRef}
             onMouseMove={onMove}
             onMouseLeave={onLeave}
             className="relative"
+            style={{ perspective: 1200 }}
           >
             <motion.div
-              animate={reduce ? undefined : { y: [0, -8, 0] }}
-              transition={
-                reduce
-                  ? undefined
-                  : {
-                      y: {
-                        duration: 6.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      },
-                    }
-              }
+              style={{
+                rotateX: rx,
+                rotateY: ry,
+                transformStyle: "preserve-3d",
+              }}
+              className="relative"
             >
-              <motion.div
-                style={{
-                  x: springX,
-                  y: springY,
-                  rotateX: rx,
-                  rotateY: ry,
-                  transformStyle: "preserve-3d",
-                  perspective: 1200,
-                }}
-              >
-            {/* Glass frame with animated border */}
-            <div className="animated-border relative overflow-hidden rounded-[1.75rem] p-[1px]">
-              <div className="glass-strong relative overflow-hidden rounded-[1.7rem] p-2 sm:p-3">
-                {/* Reflection */}
-                <div
-                  className="pointer-events-none absolute inset-x-0 top-0 z-20 h-1/3 rounded-t-[1.5rem] bg-gradient-to-b from-white/[0.1] to-transparent"
-                  aria-hidden
-                />
-
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[1.35rem]">
-                  <Image
-                    src="/portrait.png"
-                    alt={`${siteConfig.name} — professional portrait`}
-                    fill
-                    priority
-                    quality={92}
-                    sizes="(max-width: 1024px) 90vw, 480px"
-                    className="object-cover object-[center_18%]"
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(5,5,5,0.78) 0%, transparent 42%)",
-                    }}
-                  />
-                  <div className="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6">
-                    <p className="font-display text-sm font-semibold text-[#FFF8E7]">
-                      Building products that feel premium.
-                    </p>
-                    <p className="mt-1 text-xs text-[#E8D5A3]/70">
-                      {siteConfig.location}
-                    </p>
+              {/* Portrait card — 30px radius, gold stroke */}
+              <div className="animated-border relative overflow-hidden rounded-[30px] p-px shadow-[0_30px_80px_-28px_rgba(0,0,0,0.85),0_0_50px_-18px_rgba(212,175,55,0.35)]">
+                <div className="relative overflow-hidden rounded-[29px] border border-[rgba(212,175,55,0.22)] bg-[#0a0a0a]/0.65] p-1.5 backdrop-blur-sm sm:p-2">
+                  <div className="relative aspect-[6/7] overflow-hidden rounded-[24px]">
+                    <Image
+                      src="/portrait.png"
+                      alt={`${siteConfig.name} — professional portrait`}
+                      fill
+                      priority
+                      quality={92}
+                      sizes="(max-width: 1024px) 90vw, 560px"
+                      className="object-cover object-[center_16%]"
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(to top, rgba(8,8,8,0.72) 0%, transparent 38%)",
+                      }}
+                    />
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Floating glass chips */}
-            <motion.div
-              className="glass absolute -left-3 top-[18%] hidden rounded-xl px-3 py-2 sm:block"
-              animate={reduce ? undefined : { y: [0, -6, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <p className="text-[10px] uppercase tracking-wider text-muted">
-                Focus
-              </p>
-              <p className="text-xs font-medium text-white">Full-Stack</p>
-            </motion.div>
-            <motion.div
-              className="glass absolute -right-2 bottom-[28%] hidden rounded-xl px-3 py-2 sm:block"
-              animate={reduce ? undefined : { y: [0, 6, 0] }}
-              transition={{
-                duration: 5.5,
-                delay: 0.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <p className="text-[10px] uppercase tracking-wider text-muted">
-                Status
-              </p>
-              <p className="text-xs font-medium text-accent">Open to work</p>
-            </motion.div>
+              {/* FOCUS badge — top left */}
+              <motion.div
+                className="absolute -left-1 top-[10%] z-20 sm:-left-3 sm:top-[12%]"
+                animate={reduce ? undefined : { y: [0, -7, 0] }}
+                transition={{
+                  duration: 5.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <motion.div
+                  style={{ x: px, y: pySoft }}
+                  className="rounded-2xl border border-[rgba(212,175,55,0.22)] bg-black/55 px-3.5 py-2.5 backdrop-blur-xl"
+                >
+                  <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                    Focus
+                  </p>
+                  <p className="mt-0.5 text-sm font-semibold text-white">
+                    Full-Stack
+                  </p>
+                </motion.div>
+              </motion.div>
+
+              {/* VS Code snippet — middle left */}
+              <motion.div
+                className="absolute -left-2 top-[36%] z-20 hidden sm:block"
+                animate={reduce ? undefined : { y: [0, 6, 0] }}
+                transition={{
+                  duration: 6.2,
+                  delay: 0.25,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <motion.div
+                  style={{ x: pxNeg, y: pyNeg }}
+                  className="w-[13.5rem] overflow-hidden rounded-2xl border border-[rgba(212,175,55,0.2)] bg-[#0c0c0c]/90 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl md:w-[15rem]"
+                >
+                  <div className="flex items-center gap-1.5 border-b border-white/[0.06] px-3 py-2">
+                    <span className="h-2 w-2 rounded-full bg-[#FF5F56]" />
+                    <span className="h-2 w-2 rounded-full bg-[#FFBD2E]" />
+                    <span className="h-2 w-2 rounded-full bg-[#27C93F]" />
+                    <span className="ml-2 text-[9px] text-white/30">
+                      developer.js
+                    </span>
+                  </div>
+                  <pre className="overflow-x-auto p-3 font-mono text-[10px] leading-[1.65] md:text-[11px]">
+                    <code>
+                      <span style={{ color: GOLD }}>const</span>
+                      <span className="text-white"> developer </span>
+                      <span className="text-white/40">=</span>
+                      <span className="text-white"> {"{"}</span>
+                      {"\n"}
+                      <span className="text-white/50">{"  "}</span>
+                      <span style={{ color: GOLD }}>name</span>
+                      <span className="text-white/40">:</span>
+                      <span className="text-white">
+                        {" "}
+                        &quot;Akhlaq Kafel&quot;
+                      </span>
+                      <span className="text-white/40">,</span>
+                      {"\n"}
+                      <span className="text-white/50">{"  "}</span>
+                      <span style={{ color: GOLD }}>role</span>
+                      <span className="text-white/40">:</span>
+                      <span className="text-white">
+                        {" "}
+                        &quot;Full-Stack Developer&quot;
+                      </span>
+                      <span className="text-white/40">,</span>
+                      {"\n"}
+                      <span className="text-white/50">{"  "}</span>
+                      <span style={{ color: GOLD }}>passion</span>
+                      <span className="text-white/40">:</span>
+                      <span className="text-white">
+                        {" "}
+                        &quot;Building products&quot;
+                      </span>
+                      <span className="text-white/40">,</span>
+                      {"\n"}
+                      <span className="text-white/50">{"  "}</span>
+                      <span style={{ color: GOLD }}>tech</span>
+                      <span className="text-white/40">:</span>
+                      <span className="text-white"> [</span>
+                      <span className="text-white/80">&quot;React&quot;</span>
+                      <span className="text-white/40">,</span>
+                      {"\n"}
+                      <span className="text-white/50">{"        "}</span>
+                      <span className="text-white/80">&quot;Next.js&quot;</span>
+                      <span className="text-white/40">,</span>
+                      {"\n"}
+                      <span className="text-white/50">{"        "}</span>
+                      <span className="text-white/80">&quot;Node&quot;</span>
+                      <span className="text-white/40">,</span>
+                      {"\n"}
+                      <span className="text-white/50">{"        "}</span>
+                      <span className="text-white/80">&quot;MongoDB&quot;</span>
+                      <span className="text-white">]</span>
+                      {"\n"}
+                      <span className="text-white">{"}"}</span>
+                    </code>
+                  </pre>
+                </motion.div>
+              </motion.div>
+
+              {/* STATUS badge — mid right */}
+              <motion.div
+                className="absolute -right-1 top-[40%] z-20 sm:-right-3 sm:top-[42%]"
+                animate={reduce ? undefined : { y: [0, 7, 0] }}
+                transition={{
+                  duration: 5.6,
+                  delay: 0.45,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <motion.div
+                  style={{ x: pxNeg, y: pySoft }}
+                  className="flex items-center gap-2.5 rounded-2xl border border-[rgba(212,175,55,0.2)] bg-black/55 px-3.5 py-2.5 backdrop-blur-xl"
+                >
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                  </span>
+                  <div>
+                    <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                      Status
+                    </p>
+                    <p className="text-sm font-semibold text-emerald-400">
+                      Open to work
+                    </p>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Stats card — overlapping bottom */}
+              <motion.div
+                className="absolute inset-x-2 bottom-3 z-20 sm:inset-x-4 sm:bottom-4"
+                initial={reduce ? false : { opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.65,
+                  duration: 0.8,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <div
+                  className="relative overflow-hidden rounded-[24px] border border-[rgba(212,175,55,0.22)] bg-black/60 backdrop-blur-xl"
+                  style={{
+                    boxShadow: `0 -1px 0 0 rgba(212,175,55,0.45), 0 0 28px -10px rgba(212,175,55,0.28)`,
+                  }}
+                >
+                  {/* Gold top glow */}
+                  <div
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
+                      boxShadow: `0 0 18px 2px rgba(212,175,55,0.35)`,
+                    }}
+                    aria-hidden
+                  />
+                  <div className="grid grid-cols-3 divide-x divide-white/[0.08]">
+                    {stats.map(({ icon: Icon, value, label }) => (
+                      <div
+                        key={label}
+                        className="flex flex-col items-center gap-1 px-2 py-3.5 text-center sm:gap-1.5 sm:px-3 sm:py-4"
+                      >
+                        <Icon
+                          className="h-3.5 w-3.5 sm:h-4 sm:w-4"
+                          style={{ color: GOLD }}
+                          strokeWidth={1.75}
+                        />
+                        <p
+                          className="font-display text-base font-bold leading-none sm:text-lg"
+                          style={{ color: GOLD }}
+                        >
+                          {value}
+                        </p>
+                        <p className="text-[8px] leading-tight text-white/50 sm:text-[10px]">
+                          {label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>
-  );
-}
-
-function ReactIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-      <circle cx="12" cy="12" r="2.2" fill="currentColor" />
-      <ellipse cx="12" cy="12" rx="10" ry="4.2" stroke="currentColor" strokeWidth="1.2" />
-      <ellipse cx="12" cy="12" rx="10" ry="4.2" stroke="currentColor" strokeWidth="1.2" transform="rotate(60 12 12)" />
-      <ellipse cx="12" cy="12" rx="10" ry="4.2" stroke="currentColor" strokeWidth="1.2" transform="rotate(120 12 12)" />
-    </svg>
-  );
-}
-
-function NextIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 14.5h-1.7l-4.3-6.2v6.2H8.8V7.5h1.8l4.2 6.1V7.5h1.7v9z" />
-    </svg>
-  );
-}
-
-function NodeIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M12 1.6 3.5 6.5v11l8.5 4.9 8.5-4.9v-11L12 1.6zm0 2.3 6.5 3.75v.2l-6.5 3.75L5.5 7.85l6.5-3.95zm-7 5.7 6.2 3.55v6.85L5 16.95V9.6zm8 10.4V13.15L19 9.6v7.35l-6 3.05z" />
-    </svg>
-  );
-}
-
-function MongoIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M12.3 2.1c-.2 1.6-.7 3-1.5 4.3-.9 1.5-1.5 3.1-1.5 4.9 0 2.2.8 3.9 2.2 5.6.3.4.5.8.5 1.3v1.6c0 .2 0 .3.2.4h.2c.1 0 .2-.1.2-.3l.1-1.8c0-.4.2-.8.5-1.1 1.5-1.8 2.3-3.7 2.3-5.9 0-2.7-1.1-5.1-2.9-7.1-.2-.2-.3-.5-.3-.9zm-.5 18.7c-.3 0-.5.1-.5.3 0 .3.4.7.5 1 .1-.3.5-.7.5-1 0-.2-.2-.3-.5-.3z" />
-    </svg>
-  );
-}
-
-function JsIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M3 3h18v18H3V3zm10.2 14.2c0 2-1.2 2.9-2.9 2.9-1.5 0-2.5-.8-3-1.7l1.6-1c.3.5.6.9 1.3.9.7 0 1.1-.3 1.1-1.3v-5.7h1.9v5.9zm4.6 2.9c-1.8 0-3-.9-3.5-2.1l1.6-1c.3.6.8 1.1 1.7 1.1.7 0 1.2-.4 1.2-.9 0-.6-.5-.9-1.4-1.3l-.5-.2c-1.4-.6-2.3-1.4-2.3-3 0-1.5 1.1-2.6 2.9-2.6 1.3 0 2.2.4 2.9 1.6l-1.6 1c-.3-.5-.7-.7-1.3-.7-.6 0-.9.3-.9.7 0 .5.3.7 1.2 1.1l.5.2c1.6.7 2.5 1.5 2.5 3.2 0 1.8-1.4 2.9-3.3 2.9z" />
-    </svg>
   );
 }

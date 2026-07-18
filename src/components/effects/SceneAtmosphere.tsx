@@ -56,17 +56,7 @@ export function SceneAtmosphere() {
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
       aria-hidden
     >
-      <div
-        className="absolute inset-0"
-        style={{
-          background: `
-            radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,162,39,0.08), transparent 55%),
-            radial-gradient(ellipse 60% 40% at 100% 20%, rgba(17,17,17,0.95), transparent 50%),
-            radial-gradient(ellipse 50% 35% at 0% 80%, rgba(10,10,10,0.98), transparent 55%),
-            linear-gradient(180deg, #050505 0%, #0a0a0a 40%, #050505 100%)
-          `,
-        }}
-      />
+      <div className="atmosphere-base absolute inset-0" />
 
       {!reduce &&
         blobs.map((blob, i) => (
@@ -86,7 +76,7 @@ export function SceneAtmosphere() {
         particles.map((p) => (
           <motion.span
             key={p.id}
-            className="absolute rounded-full"
+            className="absolute atmosphere-particle rounded-full"
             style={{
               left: `${p.x}%`,
               top: `${p.y}%`,

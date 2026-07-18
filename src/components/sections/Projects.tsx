@@ -80,20 +80,20 @@ function ProjectShowcase({
           />
 
           <div className="animated-border relative rounded-2xl p-[1px]">
-            <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#111111]">
+            <div className="overflow-hidden rounded-2xl border border-border-subtle bg-surface">
               {/* Chrome bar */}
-              <div className="flex items-center gap-2 border-b border-white/[0.08] bg-white/[0.04] px-4 py-3">
-                <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-                <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-                <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-                <div className="ml-3 flex-1 rounded-md border border-white/[0.06] bg-white/[0.03] px-3 py-1 text-[10px] text-muted">
+              <div className="flex items-center gap-2 border-b border-border-subtle bg-soft px-4 py-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-muted/40" />
+                <span className="h-2.5 w-2.5 rounded-full bg-muted/40" />
+                <span className="h-2.5 w-2.5 rounded-full bg-muted/40" />
+                <div className="ml-3 flex-1 rounded-md border border-border-subtle bg-soft px-3 py-1 text-[10px] text-muted">
                   {project.liveUrl
                     ? project.liveUrl.replace(/^https?:\/\//, "")
                     : "confidential · private build"}
                 </div>
               </div>
 
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#0A0A0A]">
+              <div className="relative aspect-[16/10] overflow-hidden bg-elevated">
                 <ProjectImageCarousel
                   images={project.images}
                   alt={project.title}
@@ -108,7 +108,7 @@ function ProjectShowcase({
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-accent">
             Featured Project 0{index + 1}
           </p>
-          <h3 className="mt-3 font-display text-3xl font-bold text-white md:text-4xl">
+          <h3 className="mt-3 font-display text-3xl font-bold text-foreground md:text-4xl">
             {project.title}
           </h3>
           <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
@@ -124,7 +124,7 @@ function ProjectShowcase({
                 <p className="text-[10px] uppercase tracking-wider text-muted">
                   {m.label}
                 </p>
-                <p className="mt-1 text-sm font-semibold text-white">
+                <p className="mt-1 text-sm font-semibold text-foreground">
                   {m.value}
                 </p>
               </div>
@@ -135,7 +135,7 @@ function ProjectShowcase({
             {project.tech.map((t) => (
               <li
                 key={t}
-                className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs text-muted"
+                className="rounded-full border border-border-subtle bg-soft px-3 py-1.5 text-xs text-muted"
               >
                 {t}
               </li>
@@ -162,7 +162,7 @@ function ProjectShowcase({
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.05]"
+                  className="border border-border-subtle bg-soft text-foreground hover:bg-soft"
                 >
                   <GitHubIcon size={14} />
                   GitHub
@@ -185,12 +185,12 @@ export function Projects() {
           eyebrow="Projects"
           title={
             <>
-              Product launches,
+              Work I&apos;ve
               <br />
-              <span className="text-gradient">not demos.</span>
+              <span className="text-gradient">shipped.</span>
             </>
           }
-          description="Production systems built for real users — presented like launches, not template cards."
+          description="Real production projects I've built and maintained — BetSea, Hamari Dairy, and a confidential invoice system."
         />
 
         <div className="space-y-16 md:space-y-24">

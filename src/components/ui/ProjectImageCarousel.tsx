@@ -179,7 +179,7 @@ export function ProjectImageCarousel({
               e.stopPropagation();
               prev();
             }}
-            className="absolute top-1/2 left-2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/45 text-white/90 opacity-0 backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:bg-black/60 hover:text-[#E8D5A3] group-hover/carousel:opacity-100 focus-visible:opacity-100 sm:left-3 sm:h-10 sm:w-10"
+            className="absolute top-1/2 left-2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/45 text-white/90 opacity-0 backdrop-blur-md transition-[opacity,border-color,background-color,color] duration-300 hover:border-accent/40 hover:bg-black/60 hover:text-[#7A91A7] group-hover/carousel:opacity-100 focus-visible:opacity-100 sm:left-3 sm:h-10 sm:w-10"
           >
             <ChevronLeft size={18} />
           </button>
@@ -190,7 +190,7 @@ export function ProjectImageCarousel({
               e.stopPropagation();
               next();
             }}
-            className="absolute top-1/2 right-2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/45 text-white/90 opacity-0 backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:bg-black/60 hover:text-[#E8D5A3] group-hover/carousel:opacity-100 focus-visible:opacity-100 sm:right-3 sm:h-10 sm:w-10"
+            className="absolute top-1/2 right-2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/45 text-white/90 opacity-0 backdrop-blur-md transition-[opacity,border-color,background-color,color] duration-300 hover:border-accent/40 hover:bg-black/60 hover:text-[#7A91A7] group-hover/carousel:opacity-100 focus-visible:opacity-100 sm:right-3 sm:h-10 sm:w-10"
           >
             <ChevronRight size={18} />
           </button>
@@ -214,8 +214,8 @@ export function ProjectImageCarousel({
                     className={cn(
                       "block rounded-full transition-colors",
                       active
-                        ? "bg-accent shadow-[0_0_10px_rgba(201,162,39,0.55)]"
-                        : "bg-white/35 group-hover/dot:bg-white/55"
+                        ? "bg-accent shadow-[0_0_10px_var(--glow)]"
+                        : "bg-muted/40 group-hover/dot:bg-muted/70"
                     )}
                     animate={{
                       width: active ? 18 : 7,

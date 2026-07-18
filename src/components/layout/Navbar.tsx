@@ -12,6 +12,7 @@ import { Menu, X } from "lucide-react";
 import { navLinks, siteConfig } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 type PortfolioLenis = {
   scrollTo: (target: string | HTMLElement, opts?: object) => void;
@@ -92,7 +93,7 @@ function NavLink({
       className={cn(
         "group relative inline-flex items-center justify-center rounded-full px-3.5 py-2 text-sm transition-[color] duration-[350ms] ease-in-out",
         active || hovered
-          ? "font-medium text-[#E8D5A3]"
+          ? "font-medium text-champagne"
           : "font-normal text-muted"
       )}
       aria-current={active ? "page" : undefined}
@@ -102,7 +103,7 @@ function NavLink({
         className={cn(
           "pointer-events-none absolute inset-0 rounded-full border backdrop-blur-md transition-all duration-[350ms] ease-in-out",
           hovered && !active
-            ? "border-accent/25 bg-[#0A0A0A]/55 opacity-100 shadow-[0_0_18px_-6px_rgba(201,162,39,0.35)]"
+            ? "border-accent/25 bg-elevated/55 opacity-100 shadow-[0_0_18px_-6px_var(--glow)]"
             : "border-transparent bg-transparent opacity-0"
         )}
         aria-hidden
@@ -112,7 +113,7 @@ function NavLink({
       {active && (
         <motion.span
           layoutId="nav-active-pill"
-          className="pointer-events-none absolute inset-0 rounded-full border border-accent/30 bg-accent/[0.08] shadow-[0_0_22px_-6px_rgba(201,162,39,0.45)] backdrop-blur-md"
+          className="pointer-events-none absolute inset-0 rounded-full border border-accent/30 bg-accent/[0.08] shadow-[0_0_22px_-6px_var(--glow)] backdrop-blur-md"
           transition={{ type: "spring", stiffness: 380, damping: 32, mass: 0.6 }}
           aria-hidden
         />
@@ -126,7 +127,7 @@ function NavLink({
         )}
         style={{
           background:
-            "radial-gradient(ellipse 70% 80% at 50% 50%, rgba(201,162,39,0.14), transparent 70%)",
+            "radial-gradient(ellipse 70% 80% at 50% 50%, var(--glow), transparent 70%)",
         }}
         aria-hidden
       />
@@ -135,13 +136,13 @@ function NavLink({
 
       {/* Center-outward gold underline */}
       <span
-        className="pointer-events-none absolute bottom-1 left-1/2 z-[1] h-[2px] -translate-x-1/2 rounded-full bg-[#C9A227] transition-[width,box-shadow,opacity] duration-[350ms] ease-in-out"
+        className="pointer-events-none absolute bottom-1 left-1/2 z-[1] h-[2px] -translate-x-1/2 rounded-full bg-accent transition-[width,box-shadow,opacity] duration-[350ms] ease-in-out"
         style={{
           width: hovered || active ? "58%" : "0%",
           opacity: hovered || active ? 1 : 0,
           boxShadow:
             hovered || active
-              ? "0 0 10px 1px rgba(201,162,39,0.55), 0 0 18px rgba(201,162,39,0.25)"
+              ? "0 0 10px 1px var(--glow), 0 0 18px var(--glow)"
               : "none",
         }}
         aria-hidden
@@ -159,7 +160,7 @@ export function Navbar() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const glowOpacity = useSpring(0, { stiffness: 200, damping: 28 });
-  const navGlow = useMotionTemplate`radial-gradient(420px circle at ${mouseX}px ${mouseY}px, rgba(201,162,39,0.1), transparent 42%)`;
+  const navGlow = useMotionTemplate`radial-gradient(420px circle at ${mouseX}px ${mouseY}px, var(--glow), transparent 42%)`;
 
   const syncActive = useCallback(() => {
     const offset = 120;
@@ -216,7 +217,7 @@ export function Navbar() {
         className={cn(
           "relative mx-auto flex h-14 max-w-[1440px] items-center justify-between overflow-hidden rounded-2xl px-5 transition-all duration-500 md:h-16",
           scrolled || open
-            ? "border border-white/[0.08] bg-[#0A0A0A]/80 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.9)] backdrop-blur-2xl"
+            ? "border border-border-subtle bg-elevated/80 shadow-[0_20px_50px_-30px_var(--shadow-color)] backdrop-blur-2xl"
             : "border border-transparent bg-transparent"
         )}
       >
@@ -234,7 +235,7 @@ export function Navbar() {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/20 to-transparent opacity-40" />
           <motion.div
-            className="absolute top-0 h-px w-1/3 bg-gradient-to-r from-transparent via-[#E8D5A3]/50 to-transparent"
+            className="absolute top-0 h-px w-1/3 bg-gradient-to-r from-transparent via-champagne/50 to-transparent"
             animate={{ left: ["-35%", "110%"] }}
             transition={{
               duration: 5.5,
@@ -252,7 +253,7 @@ export function Navbar() {
             scrollToSection("#home");
             setActive("");
           }}
-          className="relative z-[1] font-display text-lg font-bold tracking-tight text-white"
+          className="relative z-[1] font-display text-lg font-bold tracking-tight text-foreground"
         >
           {siteConfig.name.split(" ")[0]}
           <span className="text-accent">.</span>
@@ -270,7 +271,8 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="relative z-[1] hidden md:block">
+        <div className="relative z-[1] hidden items-center gap-2 md:flex">
+          <ThemeToggle />
           <MagneticButton
             as="a"
             href="#contact"
@@ -279,21 +281,24 @@ export function Navbar() {
               scrollToSection("#contact");
               setActive("#contact");
             }}
-            className="border border-accent/30 bg-accent/10 px-5 py-2.5 text-[#E8D5A3] hover:bg-accent/15"
+            className="border border-accent/30 bg-accent/10 px-5 py-2.5 text-champagne hover:bg-accent/15"
           >
             Let&apos;s talk
           </MagneticButton>
         </div>
 
-        <button
-          type="button"
-          className="relative z-[1] flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] text-white md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
-          {open ? <X size={18} /> : <Menu size={18} />}
-        </button>
+        <div className="relative z-[1] flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border-subtle text-foreground"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+          >
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -302,7 +307,7 @@ export function Navbar() {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="mx-auto mt-2 max-w-[1440px] rounded-2xl border border-white/[0.08] bg-[#0A0A0A]/95 p-6 backdrop-blur-2xl md:hidden"
+            className="mx-auto mt-2 max-w-[1440px] rounded-2xl border border-border-subtle bg-elevated/95 p-6 backdrop-blur-2xl md:hidden"
           >
             <ul className="flex flex-col gap-4">
               {navLinks.map((link) => (
@@ -317,7 +322,7 @@ export function Navbar() {
                     }}
                     className={cn(
                       "font-display text-2xl font-semibold transition-colors duration-300",
-                      active === link.href ? "text-[#E8D5A3]" : "text-white"
+                      active === link.href ? "text-champagne" : "text-foreground"
                     )}
                   >
                     {link.label}

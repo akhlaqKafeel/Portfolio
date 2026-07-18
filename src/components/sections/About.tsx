@@ -19,9 +19,9 @@ export function About() {
           eyebrow="About"
           title={
             <>
-              Less noise.
+              Who I am
               <br />
-              <span className="text-gradient">More craft.</span>
+              <span className="text-gradient">& what I build.</span>
             </>
           }
           description={aboutStory.intro}
@@ -32,7 +32,7 @@ export function About() {
             <StaggerItem key={stat.label}>
               <div className="glass group relative overflow-hidden rounded-2xl p-5 transition-transform duration-300 hover:-translate-y-1 md:p-6">
                 <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-accent/10 blur-2xl" />
-                <p className="font-display text-3xl font-bold text-[#FFF8E7] md:text-4xl">
+                <p className="font-display text-3xl font-bold text-heading md:text-4xl">
                   {stat.value}
                 </p>
                 <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-muted">
@@ -48,7 +48,7 @@ export function About() {
             {aboutStory.body.map((paragraph, i) => (
               <Reveal key={paragraph.slice(0, 20)} delay={i * 0.05}>
                 <div className="glass rounded-2xl p-5 md:p-6">
-                  <p className="text-base leading-relaxed text-[#F5F0E8]/85 md:text-[17px]">
+                  <p className="text-base leading-relaxed text-foreground/80 md:text-[17px]">
                     {paragraph}
                   </p>
                 </div>
@@ -62,7 +62,7 @@ export function About() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
                   Now
                 </p>
-                <p className="mt-3 font-display text-xl font-semibold text-[#FFF8E7]">
+                <p className="mt-3 font-display text-xl font-semibold text-heading">
                   {experience[0].role}
                 </p>
                 <p className="mt-1 text-sm text-muted">
@@ -72,7 +72,7 @@ export function About() {
                   {["React.js", "Next.js", "Node.js", "MongoDB"].map((t) => (
                     <span
                       key={t}
-                      className="rounded-full border border-accent/20 bg-accent/5 px-3 py-1 text-xs text-[#E8D5A3]"
+                      className="rounded-full border border-accent/20 bg-accent/5 px-3 py-1 text-xs text-champagne"
                     >
                       {t}
                     </span>
@@ -85,7 +85,7 @@ export function About() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
                   Education
                 </p>
-                <p className="mt-3 font-display text-lg font-semibold text-[#FFF8E7]">
+                <p className="mt-3 font-display text-lg font-semibold text-heading">
                   {education[0].school}
                 </p>
                 <p className="mt-1 text-sm text-muted">{education[0].detail}</p>
@@ -97,7 +97,7 @@ export function About() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
                   Previously
                 </p>
-                <p className="mt-3 font-medium text-[#FFF8E7]">
+                <p className="mt-3 font-medium text-heading">
                   {experience[1].role}
                 </p>
                 <p className="mt-1 text-sm text-muted">

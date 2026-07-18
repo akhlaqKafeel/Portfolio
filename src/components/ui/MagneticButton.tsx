@@ -51,7 +51,7 @@ export function MagneticButton({
     animate: { x: position.x, y: position.y },
     transition: { type: "spring" as const, stiffness: 220, damping: 18, mass: 0.4 },
     className: cn(
-      "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]",
+      "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
       className
     ),
     "aria-label": ariaLabel,

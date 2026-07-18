@@ -15,7 +15,7 @@ const companyMeta: Record<
   "Hatim Technologies": {
     initials: "HT",
     tech: ["React.js", "Next.js", "Node.js", "Express.js", "MongoDB", "REST APIs"],
-    color: "#C9A227",
+    color: "#7A91A7",
   },
   "Hamari Dairy": {
     initials: "HD",
@@ -39,7 +39,7 @@ export function Experience() {
               <span className="text-gradient"> production.</span>
             </>
           }
-          description="Interactive timeline of roles where I built, maintained, and improved live software."
+          description="My roles at Hatim Technologies and Hamari Dairy — building and maintaining live software."
         />
 
         <div className="relative">
@@ -67,8 +67,8 @@ export function Experience() {
                       className={cn(
                         "absolute top-8 left-4 hidden h-4 w-4 -translate-x-1/2 rounded-full border-2 transition-all duration-300 md:left-8 md:block",
                         isOpen
-                          ? "border-accent bg-accent shadow-[0_0_14px_rgba(201,162,39,0.35)] scale-125"
-                          : "border-white/15 bg-white hover:border-accent/60"
+                          ? "border-accent bg-accent shadow-[0_0_14px_var(--glow)] scale-125"
+                          : "border-border-subtle bg-heading hover:border-accent/60"
                       )}
                     />
 
@@ -79,13 +79,13 @@ export function Experience() {
                       className={cn(
                         "group w-full overflow-hidden rounded-3xl border text-left transition-all duration-500",
                         isOpen
-                          ? "border-accent/30 bg-white/[0.04] shadow-[0_0_60px_-20px_rgba(201,162,39,0.35)]"
-                          : "border-white/[0.08] bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.03]"
+                          ? "border-accent/30 bg-soft shadow-[0_0_60px_-20px_var(--glow)]"
+                          : "border-border-subtle bg-soft hover:border-border hover:bg-soft"
                       )}
                     >
                       <div className="flex flex-col gap-5 p-6 sm:flex-row sm:items-start sm:p-8">
                         <div
-                          className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/[0.08] font-display text-lg font-bold text-white"
+                          className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-border-subtle font-display text-lg font-bold text-foreground"
                           style={{
                             background: `linear-gradient(145deg, ${meta?.color}33, transparent)`,
                             boxShadow: isOpen
@@ -98,7 +98,7 @@ export function Experience() {
 
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                            <h3 className="font-display text-2xl font-bold text-white md:text-3xl">
+                            <h3 className="font-display text-2xl font-bold text-foreground md:text-3xl">
                               {job.role}
                             </h3>
                             <span className="text-sm text-muted">
@@ -121,7 +121,7 @@ export function Experience() {
                                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                                 className="overflow-hidden"
                               >
-                                <p className="mt-5 max-w-3xl text-base leading-relaxed text-white/75">
+                                <p className="mt-5 max-w-3xl text-base leading-relaxed text-foreground/75">
                                   {job.description}
                                 </p>
 
@@ -129,7 +129,7 @@ export function Experience() {
                                   {job.highlights.map((item) => (
                                     <li
                                       key={item}
-                                      className="flex items-start gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-3 text-sm text-white/80"
+                                      className="flex items-start gap-2.5 rounded-xl border border-border-subtle bg-soft px-3.5 py-3 text-sm text-foreground/80"
                                     >
                                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                                       {item}

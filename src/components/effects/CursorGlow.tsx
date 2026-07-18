@@ -38,7 +38,7 @@ export function CursorGlow() {
         y: springY,
         opacity: visible ? 1 : 0,
         background:
-          "radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 68%)",
+          "radial-gradient(circle, var(--glow) 0%, transparent 68%)",
       }}
     />
   );

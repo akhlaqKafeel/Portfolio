@@ -15,11 +15,11 @@ export function Skills() {
           eyebrow="Skills"
           title={
             <>
-              How I
-              <span className="text-gradient"> think.</span>
+              What I&apos;m
+              <span className="text-gradient"> good at.</span>
             </>
           }
-          description="Capabilities that show up in the work — not progress bars."
+          description="The skills I use daily on real projects — frontend, backend, APIs, and databases."
           align="center"
         />
 
@@ -37,12 +37,12 @@ export function Skills() {
                 className="glass group relative h-full overflow-hidden rounded-[1.35rem] px-5 py-5"
               >
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/10 px-3 py-1">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(201,162,39,0.6)]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--glow)]" />
                   <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <h3 className="font-display text-lg font-semibold text-[#FFF8E7]">
+                <h3 className="font-display text-lg font-semibold text-heading">
                   {skill.name}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">

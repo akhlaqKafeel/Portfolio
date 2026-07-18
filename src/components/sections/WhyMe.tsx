@@ -33,7 +33,7 @@ function WhyCard({
   const rotateX = useSpring(0, { stiffness: 220, damping: 22 });
   const rotateY = useSpring(0, { stiffness: 220, damping: 22 });
 
-  const glow = useMotionTemplate`radial-gradient(420px circle at ${mouseX}px ${mouseY}px, rgba(201,162,39,0.16), transparent 55%)`;
+  const glow = useMotionTemplate`radial-gradient(420px circle at ${mouseX}px ${mouseY}px, var(--glow), transparent 55%)`;
 
   const onMove = (e: React.MouseEvent) => {
     const el = ref.current;
@@ -70,7 +70,7 @@ function WhyCard({
         }}
         whileHover={{ y: -6, rotateZ: index % 2 === 0 ? 0.6 : -0.6 }}
         transition={{ type: "spring", stiffness: 260, damping: 22 }}
-        className="group relative h-full overflow-hidden rounded-2xl border border-accent/15 bg-[#0A0A0A]/90 p-5 shadow-[0_20px_40px_-28px_rgba(0,0,0,0.9)] backdrop-blur-xl md:p-6"
+        className="group relative h-full overflow-hidden rounded-2xl border border-accent/15 bg-elevated/90 p-5 shadow-[0_20px_40px_-28px_var(--shadow-color)] backdrop-blur-xl md:p-6"
       >
         {/* Mouse-follow lighting */}
         <motion.div
@@ -83,7 +83,7 @@ function WhyCard({
         <div
           className="pointer-events-none absolute -top-16 right-0 h-40 w-40 rounded-full blur-3xl transition-opacity duration-500"
           style={{
-            background: "rgba(201,162,39,0.12)",
+            background: "var(--glow)",
             opacity: hovered ? 1 : 0.35,
           }}
           aria-hidden
@@ -94,7 +94,7 @@ function WhyCard({
           className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           style={{
             boxShadow:
-              "inset 0 0 0 1px rgba(201,162,39,0.35), 0 0 28px -10px rgba(201,162,39,0.35)",
+              "inset 0 0 0 1px var(--glow), 0 0 28px -10px var(--glow)",
           }}
           aria-hidden
         />
@@ -108,7 +108,7 @@ function WhyCard({
             >
               <Icon size={20} strokeWidth={1.75} />
             </motion.div>
-            <span className="rounded-full border border-accent/20 bg-accent/5 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#E8D5A3]">
+            <span className="rounded-full border border-accent/20 bg-accent/5 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-champagne">
               {item.badge}
             </span>
           </div>
@@ -116,11 +116,11 @@ function WhyCard({
           <motion.h3
             animate={hovered ? { x: 3 } : { x: 0 }}
             transition={{ type: "spring", stiffness: 280, damping: 20 }}
-            className="font-display text-xl font-bold tracking-tight text-[#FFF8E7] md:text-[1.35rem]"
+            className="font-display text-xl font-bold tracking-tight text-heading md:text-[1.35rem]"
           >
             {item.title}
           </motion.h3>
-          <p className="mt-2.5 max-w-md text-sm leading-relaxed text-[#A89F91] md:text-[15px] md:leading-7">
+          <p className="mt-2.5 max-w-md text-sm leading-relaxed text-muted md:text-[15px] md:leading-7">
             {item.description}
           </p>
         </div>
@@ -138,7 +138,7 @@ export function WhyMe() {
         aria-hidden
         style={{
           background:
-            "radial-gradient(ellipse 55% 40% at 50% 30%, rgba(201,162,39,0.07), transparent 70%)",
+            "radial-gradient(ellipse 55% 40% at 50% 30%, var(--glow), transparent 70%)",
         }}
       />
 
@@ -147,11 +147,11 @@ export function WhyMe() {
           eyebrow="Why Work With Me"
           title={
             <>
-              An engineering
-              <span className="text-gradient"> mindset.</span>
+              How I
+              <span className="text-gradient"> work.</span>
             </>
           }
-          description="Not buzzwords — principles that show up in every commit, review, and release."
+          description="What you can expect when we build together — based on how I already work in production."
           align="center"
         />
 

@@ -21,7 +21,6 @@ const jsonLd = {
   email: siteConfig.email,
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Jammu",
     addressRegion: "Jammu & Kashmir",
     addressCountry: "IN",
   },

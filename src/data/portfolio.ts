@@ -7,7 +7,7 @@ export const siteConfig = {
   linkedin: "https://linkedin.com/in/akhlaqkafel",
   github: "https://github.com/akhlaqKafeel",
   resumeUrl: "/Akhlaq_Kafel_Resume.pdf",
-  location: "Jammu, Jammu & Kashmir, India",
+  location: "Jammu & Kashmir, India",
 };
 
 export const navLinks = [
@@ -245,40 +245,40 @@ export const whyMe = [
   {
     title: "Clean Architecture",
     description:
-      "Building scalable, maintainable codebases with reusable components and modern engineering practices.",
-    badge: "Production Ready",
+      "I structure apps so they're easy to extend — reusable components, clear boundaries, and code that won't fight you six months later.",
+    badge: "How I Build",
     span: "sm:col-span-2 lg:col-span-2",
   },
   {
     title: "Production Experience",
     description:
-      "Hands-on experience building, maintaining, debugging, and improving live production applications used by real users.",
-    badge: "Live Systems",
+      "I've shipped and supported live products at Hatim Technologies and Hamari Dairy — not just demos, real users and real deadlines.",
+    badge: "Live Work",
     span: "sm:col-span-1 lg:col-span-1",
   },
   {
     title: "Continuous Learning",
     description:
-      "Always exploring modern technologies, improving engineering skills, and adopting best practices.",
-    badge: "Growth Mindset",
+      "I stay curious — picking up better patterns, tools, and practices so the next project is sharper than the last.",
+    badge: "Always Growing",
     span: "sm:col-span-1 lg:col-span-1",
   },
   {
     title: "Problem Solving",
     description:
-      "I enjoy breaking complex problems into simple, maintainable, and efficient solutions.",
-    badge: "First Principles",
+      "When something breaks in production, I dig in, simplify the problem, and ship a fix that lasts.",
+    badge: "Owner Mindset",
     span: "sm:col-span-2 lg:col-span-2",
   },
 ] as const;
 
 export const aboutStory = {
   intro:
-    "I'm a Full-Stack Software Developer passionate about building scalable web applications that solve real business problems.",
+    "I'm Akhlaq Kafel — a Full-Stack Software Developer from Jammu & Kashmir, India. I build scalable web apps that solve real business problems.",
   body: [
-    "Currently, I work at Hatim Technologies, where I develop production applications using React.js, Next.js, Node.js, Express.js, MongoDB, and REST APIs. My work includes building frontend interfaces, backend services, fixing production issues, and delivering reliable software for real users.",
-    "Previously, I worked at Hamari Dairy as a Junior Software Developer, where I gained hands-on experience developing frontend and backend features, working with SQL databases, and collaborating with teams to deliver production-ready applications.",
-    "I'm always learning new technologies and enjoy writing clean, maintainable code while creating software that provides a great user experience.",
+    "Right now I'm at Hatim Technologies, shipping production software with React.js, Next.js, Node.js, Express.js, MongoDB, and REST APIs — frontend, backend, bug fixes, and everything in between for real users.",
+    "Before that I was a Junior Software Developer at Hamari Dairy in Jaipur, where I built frontend modules, backend APIs, worked with SQL, and learned what it takes to keep production software running.",
+    "I care about clean code, clear UX, and shipping work I'm proud to put my name on. Always learning, always building.",
   ],
 };
 

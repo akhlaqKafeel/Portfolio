@@ -50,13 +50,14 @@ export function Contact() {
                 <p className="text-xs font-medium uppercase tracking-[0.28em] text-accent">
                   Contact
                 </p>
-                <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-                  Let&apos;s build something{" "}
-                  <span className="text-gradient">exceptional.</span>
+                <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
+                  Let&apos;s work
+                  <br />
+                  <span className="text-gradient">together.</span>
                 </h2>
                 <p className="mx-auto mt-6 max-w-lg text-base text-muted sm:text-lg">
-                  Open to roles, collaborations, and interesting product
-                  challenges.
+                  Based in Jammu & Kashmir, India. Open to full-time roles,
+                  freelance, and collaborations.
                 </p>
 
                 <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -76,7 +77,7 @@ export function Contact() {
                     download="Akhlaq_Kafel_Resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="border border-accent/35 bg-[#0A0A0A] px-8 py-3.5 text-base text-[#E8D5A3] hover:bg-accent/10"
+                    className="border border-accent/35 bg-elevated px-8 py-3.5 text-base text-champagne hover:bg-accent/10"
                   >
                     <Download size={18} />
                     Download Resume
@@ -92,12 +93,12 @@ export function Contact() {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-white/[0.03]"
+                        className="group rounded-2xl border border-border-subtle bg-soft p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-soft"
                       >
-                        <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.08] text-accent transition-colors group-hover:bg-accent/10">
+                        <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl border border-border-subtle text-accent transition-colors group-hover:bg-accent/10">
                           <Icon size={18} />
                         </div>
-                        <p className="font-medium text-white">{link.label}</p>
+                        <p className="font-medium text-foreground">{link.label}</p>
                         <p className="mt-1 truncate text-xs text-muted">
                           {link.detail}
                         </p>

@@ -36,7 +36,7 @@ export function NodeLogo({ className }: LogoProps) {
 
 export function ExpressLogo({ className }: LogoProps) {
   return (
-    <svg viewBox="0 0 24 24" className={cn(className)} fill="#E8D5A3" aria-hidden>
+    <svg viewBox="0 0 24 24" className={cn("text-champagne", className)} fill="currentColor" aria-hidden>
       <path d="M22 7.3H2v1.4h8.1c.9 1.7 2.2 3.1 3.9 4.1-1.7 1-3 2.4-3.9 4.1H2V18h20v-1.4h-8.1c.7-1.3 1.7-2.4 2.9-3.2H22v-1.4h-5.2A12.4 12.4 0 0 0 13.9 8.7H22V7.3z" />
     </svg>
   );
@@ -112,7 +112,7 @@ export function GitLogo({ className }: LogoProps) {
 
 export function GithubLogo({ className }: LogoProps) {
   return (
-    <svg viewBox="0 0 24 24" className={cn(className)} fill="#E8D5A3" aria-hidden>
+    <svg viewBox="0 0 24 24" className={cn("text-foreground", className)} fill="currentColor" aria-hidden>
       <path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.4-3.4-1.4-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.2-4.6-5.1 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .9-.3 2.8 1 .8-.2 1.7-.3 2.5-.3s1.7.1 2.5.3c1.9-1.3 2.8-1 2.8-1 .6 1.4.2 2.4.1 2.7.7.7 1 1.6 1 2.7 0 4-2.3 4.8-4.6 5.1.4.3.7 1 .7 2v2.9c0 .3.2.6.7.5 4-1.3 6.8-5.1 6.8-9.6C22 6.6 17.5 2 12 2z" />
     </svg>
   );
